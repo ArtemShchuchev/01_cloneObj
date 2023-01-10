@@ -47,11 +47,10 @@ int main()
         middle
         );
 
-    matrix->printMatrix("matrix");
-    std::cout << "\n";
-
     auto matrix_clone = matrix->clone();
 
+    matrix->printMatrix("matrix");
+    std::cout << "\n";
     matrix_clone->printMatrix("matrix_clone");
     std::cout << "\n";
 
@@ -77,7 +76,9 @@ void tridiagonal_matrix::printMatrix(std::string_view str)
 }
 
 // супер код из одной строчки ))
+// вот так правильней
 std::unique_ptr<tridiagonal_matrix> tridiagonal_matrix::clone()
 {
-    return std::unique_ptr<tridiagonal_matrix>(this);
+    return std::make_unique<tridiagonal_matrix>
+        (this->m_down, this->m_upper, this->m_middle);
 }
