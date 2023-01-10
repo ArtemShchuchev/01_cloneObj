@@ -29,7 +29,9 @@ public:
     {};
     ~tridiagonal_matrix() { std::cout << "destructor called\n"; }
 
-    // clone()
+    void printMatrix(std::string_view);
+
+    std::unique_ptr<tridiagonal_matrix> clone();
 };
 
 int main()
@@ -45,7 +47,37 @@ int main()
         middle
         );
 
+    matrix->printMatrix("matrix");
+    std::cout << "\n";
+
     auto matrix_clone = matrix->clone();
 
+    matrix_clone->printMatrix("matrix_clone");
+    std::cout << "\n";
+
     return 0;
+}
+
+// написал чтоб самому было нагляднее понять
+void tridiagonal_matrix::printMatrix(std::string_view str)
+{
+    std::cout << str << ":\n";
+
+    std::cout << "m_down: ";
+    for (const auto& elem : m_down) std::cout << elem << " ";
+    std::cout << "\n";
+
+    std::cout << "m_upper: ";
+    for (const auto& elem : m_upper) std::cout << elem << " ";
+    std::cout << "\n";
+
+    std::cout << "m_middle: ";
+    for (const auto& elem : m_middle) std::cout << elem << " ";
+    std::cout << "\n";
+}
+
+// супер код из одной строчки ))
+std::unique_ptr<tridiagonal_matrix> tridiagonal_matrix::clone()
+{
+    return std::unique_ptr<tridiagonal_matrix>(this);
 }
